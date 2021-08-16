@@ -11,3 +11,8 @@ export const VALIDATION_MESSAGES = {
   numbers: 'You should use at least one number',
   characters: 'You should use at least 8 characters'
 }
+
+export const NOTIFICATION = {
+  upload_successful: 'The file was successfully uploaded',
+  update_user: 'The user was successfully updated'
+}

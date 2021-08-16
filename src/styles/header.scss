@@ -1,19 +1,57 @@
 @import './colors.scss';
 
 .header {
-  height: 10vh;
+  // height: 10vh;
   background-color: $primary;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
 
-  // &__profile {
+  #home {
+    color: $no_bgc;
+    font-size: 30px;
+    text-decoration: none;
+  }
 
-  // }
+  &__profile {
+    display: flex;
+    margin: 5px 0;
+
+    &-photo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid rgb(216, 211, 211);
+      margin-right: 20px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    // &-email {
+    //   display: flex;
+    //   align-items: center;
+
+    //   p {
+    //     margin: 10px 10px;
+    //   }
+
+    // }
+
+    &-logout {
+      display: flex;
+      align-items: center;
+    }
+  }
 
   h1 {
     color: $no_bgc;
   }
 
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
 }

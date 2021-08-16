@@ -1,20 +1,23 @@
 import moment from 'moment';
 
-import { getPosts, createPost, gerUserById } from '../api/api-handlers';
+import { getPosts, createPost, getUsers } from '../api/api-handlers';
 import { LocalStorageService } from '../shared/ls-service';
+import { setUserInfo } from '../shared/helpers';
 
 export const renderPosts = async () => {
   const postsContainer = document.querySelector('.main-content__posts');
   let posts;
   let users;
+
   postsContainer.innerHTML = null;
 
-  await getPosts().then( response => posts = response);
-  await getUsers().then( response => users = response);
+  setUserInfo();
+
+  await getPosts().then( response => posts = response );
+  await getUsers().then( response => users = response );
 
   posts.forEach( post => {
-    const user = users.find( user => user.id === post.userId)
-    console.log(post);
+    const user = users.find(user => user.id === post.userId);
     const postBlock = document.createElement('div');
     const title = document.createElement('h5');
     const content = document.createElement('p');
@@ -27,24 +30,17 @@ export const renderPosts = async () => {
     userName.className = 'main-content__posts-post-bottom-info';
     postDate.className = 'main-content__posts-post-bottom-info';
 
-    // await gerUserById(post.userId).then( response => {
-    //   user = response;
-    //   title.innerHTML = post.title;
-    //   content.innerHTML = post.content;
-    //   userName.innerHTML = `${user.firstName} ${user.lastName} `;
-    //   postDate.innerHTML = moment().format();
-    //   postBlock.prepend( title, content, userName, postDate);
-    //   postsContainer.append(postBlock);
-    // } );
+    if (user.uuid !== LocalStorageService.getUID()) {
+      postBlock.classList.add('other-user');
+    }
 
     title.innerHTML = post.title;
     content.innerHTML = post.content;
-    userName.innerHTML = `${user.firstName} ${user.lastName}`;
+    userName.innerHTML = `${user.firstName} ${user.lastName}, `;
     postDate.innerHTML = moment(post.date).format('MMM Do YY');
-    postBlock.prepend( title, content, userName, postDate);
+    postBlock.append(title, content, userName, postDate);
     postsContainer.append(postBlock);
-
-  })
+  });
 }
 
 export const postFormHandler = () => {

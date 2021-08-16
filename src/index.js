@@ -4,6 +4,7 @@ import { signInHandler } from './components/sign-in/sign-in';
 import { LocalStorageService } from './shared/ls-service';
 import { logoutBtnHandler } from './components/profile/profile';
 import { signUpHandler } from './components/sign-up/sign-up';
+import { profileHandler } from './components/profile/profile';
 import './styles/styles.scss';
 
 window.onload = () => {
@@ -12,16 +13,15 @@ window.onload = () => {
 
   switch (pathname) {
     case paths.home:
+      const token = LocalStorageService.getToken();
 
-    const token = LocalStorageService.getToken();
-
-    if (!token) {
-      window.location.href = routes.sign_in;
-    } else {
-      renderPosts();
-      postFormHandler();
-      logoutBtnHandler();
-    }
+      if (!token) {
+        window.location.href = routes.sign_in;
+      } else {
+        renderPosts();
+        postFormHandler();
+        logoutBtnHandler();
+      }
       break;
     case paths.sign_in:
       signInHandler();
@@ -29,6 +29,8 @@ window.onload = () => {
     case paths.sign_up:
       signUpHandler();
       break;
+    case paths.profile:
+      profileHandler();
     default:
       break;
   }

@@ -1,15 +1,13 @@
 import { signUp } from '../../api/api-handlers';
-import  {ERROR_MESSAGES } from '../../shared/constants/error-messages';
+import { setUserEmail } from '../../shared/ls-service';
 import { 
   passwordStrengthController, 
   emailValidator,
   nameValidator,
   birthdateValidator
 } from '../../shared/validators';
-import { 
-  showErrorMessage,
-  hideErrorMessage
-} from '../../shared/error-handlers';
+import { showErrorMessage, hideErrorMessage } from '../../shared/error-handlers';
+import { ERROR_MESSAGES } from '../../shared/constants/error-messages';
 
 export const signUpHandler = () => {
   const signUpForm = document.querySelector('.sign-up__form');
@@ -60,13 +58,13 @@ export const signUpHandler = () => {
   });
 
   birthInput.oninput = () => {
-    if (birthdateValidator(birthInput.value)) {
-      formFields.birth.isValid = true;
-      hideErrorMessage('birtdateError');
-    } else {
-      formFields.birth.isValid = false;
-      showErrorMessage('birtdateError', ERROR_MESSAGES.birth);
-    }
+    // if (birthdateValidator(birthInput.value)) {
+    //   formFields.birth.isValid = true;
+    //   hideErrorMessage('birtdateError');
+    // } else {
+    //   formFields.birth.isValid = false;
+    //   showErrorMessage('birtdateError', ERROR_MESSAGES.birth);
+    // }
 
     checkFormValid();
   }
@@ -75,7 +73,7 @@ export const signUpHandler = () => {
     if (nameValidator(userNameInput.value)) {
       formFields.userName.isValid = true;
       userNameInput.classList.remove('invalid');
-      showErrorMessage('userNameError');
+      hideErrorMessage('userNameError');
     } else {
       formFields.userName.isValid = false;
       userNameInput.classList.add('invalid');
@@ -85,14 +83,16 @@ export const signUpHandler = () => {
   }
 
   userNameInput.onblur = () => {
-    !nameValidator(userNameInput.value) ? showErrorMessage('userNameError', ERROR_MESSAGES.userName) : hideErrorMessage('userNameError');
+    !nameValidator(userNameInput.value) ? 
+      showErrorMessage('userNameError', ERROR_MESSAGES.userName) : 
+      hideErrorMessage('userNameError');
   }
 
   userSurnameInput.oninput = () => {
     if (nameValidator(userSurnameInput.value)) {
       formFields.surname.isValid = true;
       userSurnameInput.classList.remove('invalid');
-      showErrorMessage('userSurnameError');
+      hideErrorMessage('userSurnameError');
     } else {
       formFields.surname.isValid = false;
       userSurnameInput.classList.add('invalid');
@@ -102,7 +102,9 @@ export const signUpHandler = () => {
   }
 
   userSurnameInput.onblur = () => {
-    !nameValidator(userSurnameInput.value) ? showErrorMessage('userSurnameError', ERROR_MESSAGES.userSurname) : hideErrorMessage('userSurnameError');
+    !nameValidator(userSurnameInput.value) ? 
+      showErrorMessage('userSurnameError', ERROR_MESSAGES.userSurname) : 
+      hideErrorMessage('userSurnameError');
   }
 
   emailInput.oninput = () => {
@@ -119,7 +121,9 @@ export const signUpHandler = () => {
   }
 
   emailInput.onblur = () => {
-    !emailValidator(emailInput.value) ? showErrorMessage('emailError', ERROR_MESSAGES.email) : hideErrorMessage('emailError');
+    !emailValidator(emailInput.value) ? 
+      showErrorMessage('emailError', ERROR_MESSAGES.email) : 
+      hideErrorMessage('emailError');
   }
 
   password_1.oninput = () => {
@@ -130,14 +134,16 @@ export const signUpHandler = () => {
   password_2.oninput = () => {
     if (formFields.password_1.isValid && (password_1.value === password_2.value)) {
       formFields.password_2.isValid = true;
-      showErrorMessage('passwordsCompareError');
+      hideErrorMessage('passwordsCompareError');
     } else formFields.password_2.isValid = false;
 
     checkFormValid();
   }
 
   password_2.onblur = () => {
-    password_1.value !== password_2.value ? showErrorMessage('passwordsCompareError', ERROR_MESSAGES.passwordsCompare) : hideErrorMessage('passwordsCompareError');
+    password_1.value !== password_2.value ? 
+    showErrorMessage('passwordsCompareError', ERROR_MESSAGES.passwordsCompare) : 
+    hideErrorMessage('passwordsCompareError');
   }
 
   const checkFormValid = () => {

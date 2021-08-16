@@ -1,13 +1,8 @@
 import { signIn, passwordRecovery } from '../../api/api-handlers';
 import { passwordLengthValidator, emailValidator } from '../../shared/validators';
+import { showErrorMessage, hideErrorMessage } from '../../shared/error-handlers';
+import { showNotification } from '../../shared/notifications';
 import { ERROR_MESSAGES } from '../../shared/constants/error-messages';
-import {
-  hideErrorMessage,
-  showErrorMessage,
-  showErrorNotification,
-  showRecoverEmailError,
-  hideRecoverEmailError
-} from '../../shared/error-handlers';
 
 export const signInHandler = () => {
   const signInForm = document.querySelector('.sign-in__form');
@@ -34,7 +29,7 @@ export const signInHandler = () => {
     const email = emailInput.value;
     const password = passwordInput.value;
 
-    signIn(email, password).catch( error => showErrorNotification(error));
+    signIn(email, password).catch( error => showNotification(error, false));
   });
 
   passwordInput.oninput = () => {
@@ -71,12 +66,14 @@ export const signInHandler = () => {
   }
 
   emailInput.onblur = () => {
-    !emailValidator(emailInput.value) ? showErrorMessage('emailError', ERROR_MESSAGES.email) : hideErrorMessage('emailError');
+    !emailValidator(emailInput.value) ? 
+      showErrorMessage('emailError', ERROR_MESSAGES.email) : 
+      hideErrorMessage('emailError');
   }
 
   recoverEmailInput.oninput = () => {
     if (emailValidator(recoverEmailInput.value)) {
-      hideErrorMessage('passwordLengthError');
+      hideErrorMessage('recoverEmailError');
       recoverEmailInput.classList.remove('invalid');
       recoverBtn.removeAttribute('disabled');
     } else {
@@ -86,7 +83,9 @@ export const signInHandler = () => {
   }
 
   recoverEmailInput.onblur = () => {
-    !emailValidator(recoverEmailInput.value) ? showErrorMessage('recoverEmailError', ERROR_MESSAGES.email) : showErrorMessage('recoverEmailError');
+    !emailValidator(recoverEmailInput.value) ? 
+      showErrorMessage('recoverEmailError', ERROR_MESSAGES.email) : 
+      hideErrorMessage('recoverEmailError');
   }
 
   recoverBtn.onclick = () => {

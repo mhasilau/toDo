@@ -10,10 +10,25 @@
   <body>
 
     <div class="header">
-      <h1>Main Page</h1>
+      <a id="home" href="/">Main Page</a>
       <div class="header__profile">
-        <button id="logoutBtn" class="btn btn-light">Logout</button>
+        <div class="header__profile-photo">
+
+        </div>
+        <div class="dropdown">
+          <button 
+            class="btn btn-secondary dropdown-toggle" 
+            id="dropdownMenuButton" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+          ></button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="/profile.html">Profile</a></li>
+            <li><a id="logoutBtn" class="dropdown-item" href="#">Logout</a></li>
+          </ul>
+        </div>
       </div>
+
     </div>
     <div class="main-content">
       <div class="main-content__post-form">
